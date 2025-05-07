@@ -17,10 +17,3 @@
 
 ---
 
-## 📁 File Structure
-
-├── index.html # Main UI
-├── style.css # Custom styling
-├── chat.js # Core app logic
-├── script.js # Supplementary functionality
-├── ChatHistory.html # (Optional) Historical view
