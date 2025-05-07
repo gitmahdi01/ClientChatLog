@@ -236,7 +236,7 @@ document.getElementById("export-btn").addEventListener("click", async () => {
     doc.text("No chat history available.", 10, y);
   } else {
     clientChats.forEach((chat, index) => {
-      const text = `Date: ${chat.date} | Message: ${chat.message}`;
+      const text = `Date: ${chat.date} | Record: ${chat.message}`;
       
       // Check if text will fit on current page
       if (y > 280) {
