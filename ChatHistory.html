@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chat History</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1><a href="index.html">back</a></h1>
+
+  <button id="new-chat-btn">New Chat</button>
+  <button id="export-btn">Export as PDF</button>
+  <button id="Delete-message">Delete Message</button>
+  <button id="clear-messages">clear</button>
+
+  <!-- ✅ Where chat history will be displayed -->
+  <div id="chat-container"></div>
+
+  <!-- ✅ Load jsPDF BEFORE your script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- ✅ Your actual logic script -->
+  <script src="chat.js"></script>
+</body>
+</html>
