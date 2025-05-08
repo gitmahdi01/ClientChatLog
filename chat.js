@@ -53,22 +53,37 @@ function renderChats() {
   // Get only this client's chats
   const clientChats = getClientChats();
   
+  // Create a single chat bubble container
+  const chatBubble = document.createElement("div");
+  chatBubble.className = "chat-bubble";
+  
   if (clientChats.length === 0) {
-    chatContainer.innerHTML = "<p>No chat history for this client yet.</p>";
+    chatBubble.innerHTML = "<p>No chat history for this client yet.</p>";
   } else {
     // Sort chats by date (newest first)
     clientChats.sort((a, b) => new Date(b.date) - new Date(a.date));
     
-    clientChats.forEach(chat => {
-      const box = document.createElement("div");
-      box.className = "chat-box";
-      box.innerHTML = `
-        <strong>Date:</strong> ${chat.date}<br/>
-        <strong>Message:</strong> ${chat.message}
+    // Add each message to the single bubble
+    clientChats.forEach((chat, index) => {
+      const messageDiv = document.createElement("div");
+      messageDiv.className = "chat-message";
+      messageDiv.innerHTML = `
+        <p><strong>${chat.date}</strong>: ${chat.message}</p>
       `;
-      chatContainer.appendChild(box);
+      
+      // Add a separator line between messages (except for the last one)
+      if (index < clientChats.length - 1) {
+        const separator = document.createElement("hr");
+        separator.className = "message-separator";
+        messageDiv.appendChild(separator);
+      }
+      
+      chatBubble.appendChild(messageDiv);
     });
   }
+  
+  // Append the single bubble to the chat container
+  chatContainer.appendChild(chatBubble);
 }
 
 function addNewChat() {
@@ -236,7 +251,7 @@ document.getElementById("export-btn").addEventListener("click", async () => {
     doc.text("No chat history available.", 10, y);
   } else {
     clientChats.forEach((chat, index) => {
-      const text = `Date: ${chat.date} | Record: ${chat.message}`;
+      const text = `Date: ${chat.date} | Message: ${chat.message}`;
       
       // Check if text will fit on current page
       if (y > 280) {
