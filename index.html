@@ -3,19 +3,133 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="style.css" />
-  <title>Document</title>
+  <title>ClientChatLog — School Fee Communications</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <button id="add-client-btn">Add Client</button>
-  <button id="remove-client-btn">Remove</button>
-  <input type="search" placeholder="Search..." />
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-mark">📁</div>
+      <div class="logo-text">
+        <span class="logo-title">ClientChatLog</span>
+        <span class="logo-sub">Fee Communications</span>
+      </div>
+    </div>
 
-  <!-- ✅ Add this div so JS can insert client buttons here -->
-  <div id="clients"></div>
+    <div class="sidebar-actions">
+      <button class="btn-new-session" id="btnNewSession" onclick="newSession()">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        New Chat
+      </button>
+    </div>
 
-  <!-- ✅ Load script after content so elements exist before JS runs -->
-  <script src="script.js"></script>
+    <div class="sessions-label">SESSIONS</div>
+    <ul class="session-list" id="sessionList"></ul>
+
+    <div class="sidebar-footer">
+      <button class="btn-danger-ghost" onclick="confirmClearAll()">
+        🧹 Clear All Data
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN PANEL -->
+  <main class="main-panel">
+
+    <!-- Top bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger" onclick="toggleSidebar()" aria-label="Toggle sidebar">
+          <span></span><span></span><span></span>
+        </button>
+        <div class="session-title-wrap">
+          <h1 class="session-title" id="sessionTitle">Select or start a session</h1>
+          <span class="session-meta" id="sessionMeta"></span>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <button class="btn-icon" title="Export as PDF" onclick="exportPDF()" id="btnExport" disabled>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M4 1h6l4 4v10H2V1h2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+            <path d="M9 1v4h4M5 9h6M5 11.5h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+          Export PDF
+        </button>
+        <button class="btn-icon btn-danger-icon" title="Delete session" onclick="deleteSession()" id="btnDelete" disabled>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M2 4h12M6 4V2h4v2M5 4l.5 9h5l.5-9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Chat log area -->
+    <section class="chat-area" id="chatArea">
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">💬</div>
+        <p class="empty-title">No session selected</p>
+        <p class="empty-sub">Start a new chat or select an existing session from the sidebar to view or log communications.</p>
+        <button class="btn-primary" onclick="newSession()">Start New Session</button>
+      </div>
+      <div class="messages-wrap" id="messagesWrap"></div>
+    </section>
+
+    <!-- Input area -->
+    <footer class="input-area" id="inputArea">
+      <div class="input-row">
+        <div class="input-group">
+          <div class="input-meta-row">
+            <div class="field-group">
+              <label for="parentName">Parent / Guardian</label>
+              <input type="text" id="parentName" placeholder="e.g. Mrs Naidoo" autocomplete="off" />
+            </div>
+            <div class="field-group">
+              <label for="logDate">Date</label>
+              <input type="date" id="logDate" />
+            </div>
+            <div class="field-group field-channel">
+              <label for="channel">Via</label>
+              <select id="channel">
+                <option value="Call">📞 Call</option>
+                <option value="WhatsApp">💬 WhatsApp</option>
+                <option value="Email">📧 Email</option>
+                <option value="In Person">🤝 In Person</option>
+                <option value="SMS">📱 SMS</option>
+              </select>
+            </div>
+          </div>
+          <div class="message-row">
+            <textarea id="messageInput" placeholder="Log the communication — what was discussed, agreed, or noted…" rows="3"></textarea>
+            <button class="btn-log" onclick="logMessage()" id="btnLog">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Log Entry
+            </button>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- CONFIRM MODAL -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
+    <div class="modal" onclick="event.stopPropagation()">
+      <h3 class="modal-title" id="modalTitle">Confirm Action</h3>
+      <p class="modal-body" id="modalBody">Are you sure?</p>
+      <div class="modal-actions">
+        <button class="btn-ghost" onclick="closeModal()">Cancel</button>
+        <button class="btn-danger" id="modalConfirmBtn">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- jsPDF for export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
