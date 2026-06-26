@@ -11,5 +11,12 @@ const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_qzaxcoAvtWGIbqsOlfw38A_BZ17kxf2
 
 const supabaseClient = window.supabase.createClient(
   SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY
+  SUPABASE_PUBLISHABLE_KEY,
+  {
+    auth: {
+      detectSessionInUrl: true,  // parse #access_token=... from OAuth redirects
+      persistSession: true,
+      autoRefreshToken: true
+    }
+  }
 );
