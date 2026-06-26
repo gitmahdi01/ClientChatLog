@@ -13,7 +13,7 @@
 - 🗑️ Delete individual messages.
 - 🆕 Start a new chat session.
 - 📄 Export interactions as PDF for record-keeping.
-- 🗂️ Automatically renders past chats from local storage.
+- 🗂️ Automatically renders past chats from cloud
 
 ---
 
