@@ -1,0 +1,233 @@
+/* ─── ClientChatLog — auth-additions.css ─────────────────────
+   Append this to the end of your existing styles.css.
+   Covers: login screen, loading overlay, user pill, logout btn.
+   Uses the same palette as the rest of the app
+   (navy #0F1C2E, gold #C9A84C, warm off-white background).
+──────────────────────────────────────────────────────────────*/
+
+.app-shell {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+/* ─── AUTH SCREEN ─────────────────────────────────────────── */
+.auth-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0F1C2E 0%, #1A2E47 100%);
+  z-index: 500;
+  padding: 24px;
+}
+
+.auth-card {
+  background: #FAF9F7;
+  border-radius: 16px;
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 380px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+  text-align: center;
+}
+
+.auth-logo {
+  font-size: 36px;
+  margin-bottom: 8px;
+}
+
+.auth-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 26px;
+  color: #0F1C2E;
+  margin: 0 0 2px;
+}
+
+.auth-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #8A8F98;
+  margin: 0 0 24px;
+  letter-spacing: 0.3px;
+}
+
+.auth-tabs {
+  display: flex;
+  background: #EFECE6;
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 22px;
+}
+
+.auth-tab {
+  flex: 1;
+  padding: 9px 0;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6B7280;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.auth-tab.active {
+  background: #0F1C2E;
+  color: #F0EDE8;
+}
+
+.auth-form {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.auth-form .field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.auth-form label {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #4A5160;
+}
+
+.auth-form input {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  padding: 10px 12px;
+  border: 1px solid #DCD7CC;
+  border-radius: 8px;
+  background: #fff;
+  color: #1E232A;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.auth-form input:focus {
+  border-color: #C9A84C;
+}
+
+.auth-error {
+  font-family: 'Inter', sans-serif;
+  font-size: 12.5px;
+  color: #B84040;
+  margin: 0;
+  min-height: 16px;
+  text-align: left;
+}
+
+.auth-submit {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  margin: 20px 0 16px;
+  color: #A0A6AE;
+  font-size: 12px;
+  font-family: 'Inter', sans-serif;
+}
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #E2DED5;
+}
+.auth-divider span { padding: 0 10px; }
+
+.btn-google {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #DCD7CC;
+  background: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #2D3142;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.btn-google:hover:not(.disabled) { background: #F5F4F1; }
+.btn-google.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.auth-hint {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: #A0A6AE;
+  margin-top: 10px;
+}
+
+/* ─── LOADING OVERLAY ─────────────────────────────────────── */
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 28, 46, 0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 600;
+}
+.loading-overlay.visible { display: flex; }
+
+.loading-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid rgba(240,237,232,0.25);
+  border-top-color: #C9A84C;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─── SIDEBAR USER PILL + LOGOUT ──────────────────────────── */
+.user-pill {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #C9A84C;
+  background: rgba(201,168,76,0.1);
+  border-radius: 8px;
+  padding: 7px 10px;
+  margin-bottom: 8px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-logout {
+  width: 100%;
+  margin-top: 6px;
+  padding: 8px 0;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: transparent;
+  border-radius: 8px;
+  color: #B0B6C0;
+  font-family: 'Inter', sans-serif;
+  font-size: 12.5px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.btn-logout:hover {
+  background: rgba(255,255,255,0.06);
+  color: #F0EDE8;
+}
