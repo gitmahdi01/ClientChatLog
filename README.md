@@ -2,7 +2,7 @@
 
 # ClientChatLog 🗂️💬
 
-**ClientChatLog** is a lightweight web app designed to help school account managers keep track of communications with parents regarding school fees. It logs each interaction, stores them locally in the browser, and provides tools to manage and export these records.
+**ClientChatLog** is a lightweight web app designed to help school account managers keep track of communications with parents regarding school fees. It logs each interaction, stores them in supabase, and provides tools to manage and export these records.
 
 ---
 
